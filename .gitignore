@@ -1,0 +1,15 @@
+# Archivos de entorno
+.env
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de dependencias
+node_modules/
+__pycache__/
+*.pyc
+
+# Volúmenes / logs
+*.log
+pgdata/
