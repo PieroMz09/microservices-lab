@@ -20,5 +20,21 @@ services:
     ports:
       - "6379:6379"
 
+  test-connection:
+    build: 
+      context: ./auth-service
+      dockerfile: Dockerfile.test
+    container_name: test_connection
+    environment:
+      - DB_HOST=postgres
+      - POSTGRES_DB=main_db
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=devpass
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - postgres
+      - redis
+
 volumes:
   pgdata:
