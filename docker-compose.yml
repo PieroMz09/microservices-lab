@@ -12,6 +12,11 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U devuser"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:7
@@ -19,6 +24,36 @@ services:
     restart: always
     ports:
       - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  auth:
+    build: ./auth-service
+    container_name: auth_service
+    restart: always
+    environment:
+      - DEBUG=1
+      - DB_HOST=postgres
+      - DB_NAME=main_db
+      - DB_USER=devuser
+      - DB_PASS=devpass
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - SECRET_KEY=tu-secreto-super-seguro-cambialo-en-produccion
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
+             gunicorn auth_service.wsgi:application --bind 0.0.0.0:8000 --workers 3"
 
   test-connection:
     build: 
@@ -26,12 +61,13 @@ services:
       dockerfile: Dockerfile.test
     container_name: test_connection
     environment:
-      - DB_HOST=postgres
-      - POSTGRES_DB=main_db
-      - POSTGRES_USER=devuser
-      - POSTGRES_PASSWORD=devpass
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+    - DB_HOST=postgres
+    - DB_NAME=main_db
+    - DB_USER=devuser
+    - DB_PASS=devpass
+    - REDIS_HOST=redis
+    - REDIS_PORT=6379
+
     depends_on:
       - postgres
       - redis
