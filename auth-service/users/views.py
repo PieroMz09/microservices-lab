@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .serializers import RegisterSerializer, UserSerializer
 from django.contrib.auth import get_user_model
+from django.http import HttpResponse
 
 User = get_user_model()
 
@@ -26,3 +27,6 @@ def user_profile(request):
 @permission_classes([AllowAny])
 def health_check(request):
     return Response({'status': 'ok', 'service': 'auth-service'})
+
+def home(request):
+    return HttpResponse("Bienvenido al servicio de autenticación 🚀")

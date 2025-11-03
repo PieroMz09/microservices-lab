@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservicio de Autenticación</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a73e8, #4caf50);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+        p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: white;
+            color: #1a73e8;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            background: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Microservicio de Autenticación</h1>
+        <p>Bienvenido al sistema de autenticación con Django REST Framework y JWT.</p>
+        <p>Ya puedes probar tus endpoints:</p>
+        <ul style="text-align:left; margin-top:10px;">
+            <li><strong>/api/signup/</strong> → Registrar usuario</li>
+            <li><strong>/api/token/</strong> → Iniciar sesión y obtener token</li>
+            <li><strong>/api/me/</strong> → Consultar usuario autenticado</li>
+        </ul>
+        <a href="/api/">Ver API</a>
+    </div>
+</body>
+</html>

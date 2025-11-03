@@ -3,4 +3,5 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY test_connection.py .
+RUN chmod +x test_connection.py
 CMD ["python", "test_connection.py"]
